@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sarthak Provision Store</title>
+
+<style>
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #f5f7f2;
+  color: #222;
+}
+
+header {
+  background: #087443;
+  color: white;
+  padding: 22px 15px;
+  text-align: center;
+}
+
+header h1 {
+  margin: 0 0 8px;
+  font-size: 27px;
+}
+
+header p {
+  margin: 0;
+}
+
+.delivery {
+  background: #e1f5e7;
+  color: #155d32;
+  padding: 12px;
+  text-align: center;
+  font-size: 14px;
+}
+
+.search {
+  width: 92%;
+  max-width: 600px;
+  display: block;
+  margin: 18px auto;
+  padding: 13px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  font-size: 16px;
+}
+
+h2 {
+  text-align: center;
+}
+
+.products {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(145px, 1fr));
+  gap: 14px;
+  padding: 15px;
+  max-width: 1000px;
+  margin: auto;
+}
+
+.product {
+  background: white;
+  border-radius: 12px;
+  padding: 15px 10px;
+  text-align: center;
+  box-shadow: 0 2px 8px #00000010;
+}
+
+.product .emoji {
+  font-size: 42px;
+}
+
+.product h3 {
+  font-size: 16px;
+  margin: 10px 0;
+}
+
+.price {
+  color: #087443;
+  font-weight: bold;
+  margin: 10px;
+}
+
+button {
+  border: none;
+  border-radius: 8px;
+  padding: 11px 13px;
+  background: #087443;
+  color: white;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #055c34;
+}
+
+.cart {
+  background: white;
+  max-width: 650px;
+  margin: 20px auto;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px #00000010;
+}
+
+.cart-item {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  align-items: center;
+  border-bottom: 1px solid #eee;
+  padding: 12px 0;
+}
+
+.cart-item button {
+  padding: 6px 10px;
+}
+
+.total {
+  font-size: 21px;
+  font-weight: bold;
+  text-align: right;
+  margin: 20px 0;
+}
+
+form {
+  display: grid;
+  gap: 12px;
+}
+
+input, textarea, select {
+  width: 100%;
+  padding: 13px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 16px;
+}
+
+.order-button {
+  width: 100%;
+  background: #168447;
+  font-size: 17px;
+  padding: 15px;
+}
+
+.note {
+  font-size: 13px;
+  color: #666;
+  line-height: 1.5;
+}
+
+footer {
+  text-align: center;
+  padding: 22px;
+  margin-top: 25px;
+  background: #123d2b;
+  color: white;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <h1>🏪 SARTHAK PROVISION STORE</h1>
+  <p>आपकी अपनी किराना दुकान 🛒</p>
+</header>
+
+<div class="delivery">
+  📍 Rosewood City, Sector 49, C Block, Gurugram
+  <br>
+  रोज़मर्रा का राशन अब घर बैठे ऑर्डर करें!
+</div>
+
+<input
+  class="search"
+  id="search"
+  placeholder="🔍 सामान खोजें..."
+  aria-label="सामान खोजें"
+>
+
+<h2>🛍️ हमारा सामान</h2>
+
+<div class="products" id="products"></div>
+
+<section class="cart">
+  <h2>🛒 आपकी कार्ट</h2>
+  <div id="cartItems">अभी कार्ट खाली है।</div>
+  <div class="total" id="total">कुल: ₹0</div>
+
+  <h2>📦 डिलीवरी की जानकारी</h2>
+
+  <form id="orderForm">
+    <input
+      id="customerName"
+      placeholder="आपका नाम"
+      maxlength="80"
+      required
+    >
+
+    <input
+      id="customerPhone"
+      type="tel"
+      placeholder="मोबाइल नंबर"
+      inputmode="numeric"
+      pattern="[0-9]{10}"
+      maxlength="10"
+      title="10 अंकों का मोबाइल नंबर डालें"
+      required
+    >
+
+    <textarea
+      id="customerAddress"
+      placeholder="पूरा डिलीवरी पता"
+      maxlength="500"
+      required
+    ></textarea>
+
+    <select id="payment">
+      <option value="Cash on Delivery">
+        Cash on Delivery (सामान मिलने पर पैसे)
+      </option>
+      <option value="UPI">
+        UPI (भुगतान की पुष्टि दुकान से करें)
+      </option>
+    </select>
+
+    <button class="order-button" type="submit">
+      💬 WhatsApp पर ऑर्डर भेजें
+    </button>
+  </form>
+
+  <p class="note">
+    ऑर्डर भेजने पर WhatsApp खुलेगा। ऑर्डर पूरा भेजने के लिए
+    WhatsApp में Send बटन दबाएँ। दुकान की पुष्टि मिलने तक
+    आपका ऑर्डर स्वीकार हुआ नहीं माना जाएगा।
+  </p>
+</section>
+
+<footer>
+  <h3>SARTHAK PROVISION STORE</h3>
+  <p>आपकी अपनी किराना दुकान ❤️</p>
+  <p>Rosewood City, Sector 49, Gurugram</p>
+</footer>
+
+<script>
+const SHOP_WHATSAPP = "918901174959";
+
+const products = [
+  { id: 1, name: "आटा 5 किलो", price: 220, emoji: "🌾" },
+  { id: 2, name: "चावल 5 किलो", price: 300, emoji: "🍚" },
+  { id: 3, name: "चीनी 1 किलो", price: 48, emoji: "🧂" },
+  { id: 4, name: "दाल 1 किलो", price: 120, emoji: "🫘" },
+  { id: 5, name: "खाने का तेल 1 लीटर", price: 150, emoji: "🫗" },
+  { id: 6, name: "नमक 1 किलो", price: 25, emoji: "🧂" },
+  { id: 7, name: "बिस्कुट पैकेट", price: 20, emoji: "🍪" },
+  { id: 8, name: "नूडल्स पैकेट", price: 15, emoji: "🍜" },
+  { id: 9, name: "चाय 250 ग्राम", price: 120, emoji: "🍵" },
+  { id: 10, name: "दूध 1 लीटर", price: 65, emoji: "🥛" },
+  { id: 11, name: "साबुन", price: 35, emoji: "🧼" },
+  { id: 12, name: "डिटर्जेंट 1 किलो", price: 110, emoji: "🧺" }
+];
+
+let cart = {};
+
+function renderProducts() {
+  const query = document.getElementById("search")
+    .value.trim().toLowerCase();
+
+  const filtered = products.filter(product =>
+    product.name.toLowerCase().includes(query)
+  );
+
+  document.getElementById("products").innerHTML =
+    filtered.length
+      ? filtered.map(product => `
+        <article class="product">
+          <div class="emoji">${product.emoji}</div>
+          <h3>${product.name}</h3>
+          <div class="price">₹${product.price}</div>
+          <button type="button"
+            onclick="addToCart(${product.id})">
+            + कार्ट में डालें
+          </button>
+        </article>
+      `).join("")
+      : "<p>यह सामान नहीं मिला।</p>";
+}
+
+function addToCart(id) {
+  cart[id] = (cart[id] || 0) + 1;
+  renderCart();
+}
+
+function changeQuantity(id, amount) {
+  cart[id] = (cart[id] || 0) + amount;
+
+  if (cart[id] <= 0) {
+    delete cart[id];
+  }
+
+  renderCart();
+}
+
+function renderCart() {
+  const entries = Object.entries(cart);
+  const container = document.getElementById("cartItems");
+
+  if (entries.length === 0) {
+    container.textContent = "अभी कार्ट खाली है।";
+  } else {
+    container.innerHTML = entries.map(([id, qty]) => {
+      const product = products.find(p => p.id === Number(id));
+
+      return `
+        <div class="cart-item">
+          <div>
+            ${product.name}<br>
+            ₹${product.price} × ${qty}
+          </div>
+          <div>
+            <button type="button"
+              aria-label="${product.name} की मात्रा घटाएँ"
+              onclick="changeQuantity(${id}, -1)">−</button>
+            <strong>${qty}</strong>
+            <button type="button"
+              aria-label="${product.name} की मात्रा बढ़ाएँ"
+              onclick="changeQuantity(${id}, 1)">+</button>
+          </div>
+        </div>
+      `;
+    }).join("");
+  }
+
+  const total = entries.reduce((sum, [id, qty]) => {
+    const product = products.find(p => p.id === Number(id));
+    return sum + product.price * qty;
+  }, 0);
+
+  document.getElementById("total").textContent =
+    "कुल: ₹" + total;
+}
+
+document.getElementById("search")
+  .addEventListener("input", renderProducts);
+
+document.getElementById("orderForm")
+  .addEventListener("submit", function(event) {
+    event.preventDefault();
+
+    const entries = Object.entries(cart);
+
+    if (entries.length === 0) {
+      alert("पहले कार्ट में सामान जोड़ें!");
+      return;
+    }
+
+    const name = document.getElementById("customerName")
+      .value.trim();
+    const phone = document.getElementById("customerPhone")
+      .value.trim();
+    const address = document.getElementById("customerAddress")
+      .value.trim();
+    const payment = document.getElementById("payment").value;
+
+    if (!name || !address || !/^[0-9]{10}$/.test(phone)) {
+      alert("कृपया अपना नाम, पूरा पता और सही 10 अंकों का मोबाइल नंबर भरें।");
+      return;
+    }
+
+    const lines = entries.map(([id, qty]) => {
+      const product = products.find(p => p.id === Number(id));
+      return `${product.name} x ${qty} = ₹${product.price * qty}`;
+    });
+
+    const total = entries.reduce((sum, [id, qty]) => {
+      const product = products.find(p => p.id === Number(id));
+      return sum + product.price * qty;
+    }, 0);
+
+    const message = [
+      "🛒 *नया ऑर्डर - SARTHAK PROVISION STORE*",
+      "",
+      `ग्राहक: ${name}`,
+      `मोबाइल: ${phone}`,
+      `पता: ${address}`,
+      "",
+      "*सामान:*",
+      ...lines,
+      "",
+      `*कुल: ₹${total}*`,
+      `पेमेंट: ${payment}`,
+      "",
+      "कृपया ऑर्डर की उपलब्धता और डिलीवरी की पुष्टि करें।"
+    ].join("\n");
+
+    const whatsappURL =
+      "https://wa.me/" + SHOP_WHATSAPP +
+      "?text=" + encodeURIComponent(message);
+
+    window.open(whatsappURL, "_blank");
+  });
+
+renderProducts();
+renderCart();
+</script>
+
+</body>
+</html>
